@@ -22,8 +22,7 @@ public class LoanerController {
     @PostMapping
     public Loaner createLoaner(@RequestBody Loaner loaner) {
         loaner.setId(UUID.randomUUID().toString());
-        repository.save(loaner);
-        return loaner;
+        return repository.save(loaner);
     }
 
     @RequestMapping("{id}")

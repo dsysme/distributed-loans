@@ -1,5 +1,7 @@
 package com.dsysme.community.api.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,6 +29,7 @@ public class Loaner {
     private String phone;
 
     @OneToMany(mappedBy = "owner")
+    @JsonIgnore
     List<Item> ownedItems;
 
 }
