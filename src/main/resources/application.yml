@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost/distloans
+    url: jdbc:postgresql://172.17.0.3/distloans
     username: postgres
     password: 1234
   jpa:

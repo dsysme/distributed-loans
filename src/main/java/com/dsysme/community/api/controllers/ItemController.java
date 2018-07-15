@@ -18,29 +18,30 @@ public class ItemController {
         this.repository = repository;
     }
 
-    @RequestMapping("/")
+    @GetMapping("{id}")
+    public Optional<Item> getItem(@PathVariable Integer id) {
+        return repository.findById(id);
+    }
+
     @GetMapping
     public Iterable<Item> getAll() {
         return this.repository.findAll();
     }
 
-    @RequestMapping("/create")
     @PostMapping
     public Item createItem(@RequestBody Item item) {
+        // TODO after create the returned element doesn't contain all owners details (I only passed id) should I do something about it or will a true client pass all information?
         return repository.save(item);
     }
 
-    @RequestMapping("{id}")
-    @DeleteMapping
+    @DeleteMapping("{id}")
     public void deleteItem(@PathVariable("id") Integer id) {
-        if (repository.findById(id).isPresent()) {
-            repository.deleteById(id);
-        }
+        repository.deleteById(id);
     }
 
-    @RequestMapping("/update/{id}")
-    @PutMapping
+    @PutMapping("{id}")
     public Optional<Item> updateItem(@PathVariable("id") Integer  id, @RequestBody Item item) {
+        // TODO: implement a method in the repository that will allow to do this in one access
         if(repository.findById(id).isPresent()) {
             item.setId(id);
             return Optional.of(repository.save(item));

@@ -5,6 +5,7 @@ import com.dsysme.community.api.repositories.LoanerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -18,31 +19,28 @@ public class LoanerController {
         this.repository = repository;
     }
 
-    @RequestMapping("/create")
     @PostMapping
     public Loaner createLoaner(@RequestBody Loaner loaner) {
         loaner.setId(UUID.randomUUID().toString());
         return repository.save(loaner);
     }
 
-    @RequestMapping("{id}")
-    @DeleteMapping
+    @DeleteMapping("{id}")
     public void deleteLoaner(@PathVariable("id") String id) {
-        if (repository.findById(id).isPresent()) {
-            repository.deleteById(id);
-        }
+        // TODO how do I delete all dependencies? need I explicitly state the dependencies in a specialized repository function?
+        repository.deleteById(id);
     }
 
-    @RequestMapping("/update/{id}")
-    @PutMapping
-    public Loaner updateLoaner(@PathVariable("id") String id, @RequestBody Loaner loaner) {
+    @PutMapping("{id}")
+    public Optional<Loaner> updateLoaner(@PathVariable("id") String id, @RequestBody Loaner loaner) {
+        // TODO: implement a method in the repository that will allow to do this in one access
         if (repository.findById(id).isPresent()) {
-            repository.save(loaner);
+            loaner.setId(id);
+            Optional.of(repository.save(loaner)); // TODO: shows null here should I handle differently?
         }
-        return loaner;
+        return Optional.empty();
     }
 
-    @RequestMapping("/")
     @GetMapping
     public Iterable<Loaner> getAll() {
         return repository.findAll();
