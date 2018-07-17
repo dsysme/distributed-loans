@@ -5,14 +5,13 @@ import com.dsysme.community.api.repositories.LoanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("loans")
-public class LoansController {
+public class LoanController {
 
     private LoanRepository repository;
 
