@@ -11,7 +11,7 @@ CREATE TABLE loaner
 
 CREATE TABLE item
 (
-    id integer NOT NULL,
+    id SERIAL,
     description character varying(255),
     status character varying(255),
     owner_id character varying(255),
@@ -19,12 +19,12 @@ CREATE TABLE item
     CONSTRAINT fk_item_loaner FOREIGN KEY (owner_id)
         REFERENCES loaner (id) MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 CREATE TABLE loan
 (
-    id integer NOT NULL,
+    id SERIAL,
     return_date timestamp without time zone,
     return_until timestamp without time zone,
     start_date timestamp without time zone,
@@ -33,10 +33,10 @@ CREATE TABLE loan
     CONSTRAINT loan_pkey PRIMARY KEY (id),
     CONSTRAINT fk_loan_loaner FOREIGN KEY (holder_id)
         REFERENCES loaner (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON UPDATE SET NULL
+        ON DELETE SET NULL,
     CONSTRAINT fk_loan_item FOREIGN KEY (item_id)
         REFERENCES item (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON UPDATE SET NULL
+        ON DELETE SET NULL
 );

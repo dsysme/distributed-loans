@@ -1,14 +1,15 @@
 package com.dsysme.community.api.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -27,6 +28,11 @@ public class Loaner {
     private String email;
 
     private String phone;
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
     @OneToMany(mappedBy = "owner")
     @JsonIgnore

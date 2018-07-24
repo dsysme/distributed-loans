@@ -3,6 +3,7 @@ package com.dsysme.community.api.controllers;
 import com.dsysme.community.api.models.Loaner;
 import com.dsysme.community.api.repositories.LoanerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -42,8 +43,8 @@ public class LoanerController {
     }
 
     @GetMapping
-    public Iterable<Loaner> getAll() {
-        return repository.findAll();
+    public Iterable<Loaner> getAll(@RequestParam(name="page", defaultValue = "1") int page, @RequestParam(name = "size", defaultValue = "25") int size) {
+        return repository.findAll(PageRequest.of(page, size));
     }
 
 }
